@@ -1,10 +1,16 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
 
-const Cat = () => {
+interface IProps {
+  name: string;
+}
+
+const Cat = (props: IProps) => {
+  const { name } = props;
   return (
     <View>
       <Text>Hello, I am...</Text>
+      <Text>{name}</Text>
       <TextInput
         style={{
           height: 40,

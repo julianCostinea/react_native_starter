@@ -1,12 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Cat from "./components/Cat";
+import PokemonGetSingle from "./components/PokemonGetSingle";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>NEw random text</Text>
-      <Cat />
+      <PokemonGetSingle />
       <StatusBar style="auto" />
     </View>
   );
