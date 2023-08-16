@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View, Image } from "react-native";
 
 const PokemonGetSingle = () => {
   const [pokemonNameInput, setPokemonNameInput] = useState("");
   const [pokemonName, setPokemonName] = useState("");
   const [pokemonType, setPokemonType] = useState("");
+  const [pokemonImage, setPokemonImage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const getPokemon = () => {
@@ -23,12 +24,13 @@ const PokemonGetSingle = () => {
       .then((json) => {
         setPokemonName(json.name);
         setPokemonType(json.types[0].type.name);
+        setPokemonImage(json.sprites.front_default);
       })
       .catch((error) => console.error(error));
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: "center" }}>
       <Text>Get Pokemon</Text>
       <TextInput
         style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
@@ -38,6 +40,7 @@ const PokemonGetSingle = () => {
       <Button title="Get Pokemon" onPress={getPokemon} />
       {/* <Cat name="New name 2"/> */}
       <Text>{pokemonName && `${pokemonName} is of type: ${pokemonType}`}</Text>
+      {pokemonImage && <Image source={{ uri: pokemonImage }} style={{ width: 160, height: 160 }} />}
       <Text>{errorMessage}</Text>
     </View>
   );
