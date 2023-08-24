@@ -4,7 +4,6 @@ import Cat from "./components/Cat";
 import PokemonGetSingle from "./components/PokemonGetSingle";
 import CheckInView from "./components/CheckInView.tsx/CheckInView";
 import Login from "./components/RPG/Login";
-import { REACT_APP_DEV_MODE } from "@env";
 import { useState } from "react";
 import Sidebar from "./components/RPG/Sidebar";
 import AboutUs from "./components/RPG/AboutUs";
