@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Button, TextInput, View, StyleSheet } from "react-native";
 
-const Login = () => {
+interface IProps {
+  loginHelper: (state: boolean) => void;
+}
+
+const Login = ({ loginHelper }: IProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,26 +14,13 @@ const Login = () => {
       alert("Username and password cannot be empty");
       return;
     }
-
-    const options = {
-      method: "Get",
-      headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify({ username, password }),
-    };
-
-    fetch("https://192.168.87.32:7136/api/Fight/Highscore")
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        console.log("aaa", json);
-      })
-      .catch((error) => console.error(error));
+    //simulate login
+    loginHelper(true);
   };
 
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="Usernamezz" value={username} onChangeText={setUsername} />
+      <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
       <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} />
       <Button title="Login" onPress={loginHandler} />
     </View>
