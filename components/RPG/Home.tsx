@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { REACT_APP_CRUDCRUD_KEY } from "react-native-dotenv";
+import { REACT_APP_MOCK_API } from "react-native-dotenv";
+import { user } from "../../lib/types";
+import User from "./User/User";
 
 const Home = () => {
-  const [unicorns, setUnicorns] = useState([]);
-  fetch(`https://crudcrud.com/api/${REACT_APP_CRUDCRUD_KEY}/unicorns`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      setUnicorns(json);
-    })
-    .catch((error) => console.error(error));
+  const [users, setUsers] = useState<user[]>([]);
+  if (users.length === 0) {
+    fetch(`${REACT_APP_MOCK_API}/users`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        setUsers(json);
+      })
+      .catch((error) => console.error(error));
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>THIS IS HOME</Text>
-      <Text style={styles.text}>Unicorns: {unicorns.length}</Text>
+      <Text style={styles.text}>Here are all your active users:</Text>
+      {users.length > 0 ? users.map((user) => <User key={user.id} user={user} />) : <></>}
     </View>
   );
 };
