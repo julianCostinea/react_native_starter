@@ -7,28 +7,31 @@ import axios from "axios";
 
 interface IProps {
   user: user;
+  onDelete: (id: string) => void;
 }
 
 const User = (props: IProps) => {
-  const { user } = props;
+  const { user, onDelete } = props;
 
   const deleteHandler = () => {
-    axios
-      .delete(`${REACT_APP_MOCK_API}/users/${user.id}`)
-      .then((response) => {
-        try {
-          if (response.status !== 200) {
-            alert("Something went wrong");
-            return;
-          }
-          alert("User deleted successfully");
-        } catch (error) {
-          alert("Something went wrong");
-        }
-      })
-      .catch((error) => {
-        alert("Something went wrong");
-      });
+    //try this
+    onDelete(user.id);
+    // axios
+    //   .delete(`${REACT_APP_MOCK_API}/users/${user.id}`)
+    //   .then((response) => {
+    //     try {
+    //       if (response.status !== 200) {
+    //         alert("Something went wrong");
+    //         return;
+    //       }
+    //       alert("User deleted successfully");
+    //     } catch (error) {
+    //       alert("Something went wrong");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     alert("Something went wrong");
+    //   });
   };
 
   const editHandler = () => {
