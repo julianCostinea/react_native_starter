@@ -1,15 +1,18 @@
-import React from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, FlatList, Modal, Pressable } from "react-native";
 import { REACT_APP_MOCK_API } from "react-native-dotenv";
 import { user } from "../../lib/types";
 import User from "./User/User";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-
 const Home = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const queryClient = useQueryClient();
+
   const fetchUsers = (): Promise<user[]> => axios.get(`${REACT_APP_MOCK_API}/users`).then((response) => response.data);
+
   const deleteMutation = useMutation((id: string) => axios.delete(`${REACT_APP_MOCK_API}/users/${id}`), {
     onMutate: (data) => {
       queryClient.setQueryData(["users"], (oldData) => {
@@ -22,6 +25,12 @@ const Home = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error, variables, context) => {
+      alert("Something went wrong");
+    },
+    onSuccess: (data, variables, context) => {
+      alert("User deleted successfully");
     },
   });
 
@@ -53,7 +62,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
+    paddingVertical: 30,
   },
   text: {
     color: "#fff",

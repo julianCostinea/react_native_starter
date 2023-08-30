@@ -63,10 +63,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    width: "100%",
     justifyContent: "center",
     flexDirection: "row",
-    gap: 10,
+    gap: 1,
   },
   sidebarContainer: {
     flex: 1,

@@ -1,9 +1,8 @@
-import React from "react";
-import { Text, TextInput, View, StyleSheet, ScrollView, Pressable } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Pressable, Modal } from "react-native";
 import { user } from "../../../lib/types";
-import { REACT_APP_MOCK_API } from "react-native-dotenv";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import axios from "axios";
+import UserForm from "./UserForm";
 
 interface IProps {
   user: user;
@@ -13,29 +12,14 @@ interface IProps {
 const User = (props: IProps) => {
   const { user, onDelete } = props;
 
+  const [showModal, setShowModal] = useState(false);
+
   const deleteHandler = () => {
-    //try this
     onDelete(user.id);
-    // axios
-    //   .delete(`${REACT_APP_MOCK_API}/users/${user.id}`)
-    //   .then((response) => {
-    //     try {
-    //       if (response.status !== 200) {
-    //         alert("Something went wrong");
-    //         return;
-    //       }
-    //       alert("User deleted successfully");
-    //     } catch (error) {
-    //       alert("Something went wrong");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     alert("Something went wrong");
-    //   });
   };
 
   const editHandler = () => {
-    console.log("editHandler", user.name);
+    setShowModal(true);
   };
 
   return (
@@ -51,6 +35,21 @@ const User = (props: IProps) => {
           <Ionicons name="pencil" size={32} color="blue" />
         </Pressable>
       </View>
+      <Modal visible={showModal} animationType="slide" statusBarTranslucent>
+        <View style={styles.modalContent}>
+          <UserForm
+            usernameProp={user.name}
+            jobProp={user.job}
+            addressProp={user.address}
+            edit={true}
+            userId={user.id}
+            closeModal={() => setShowModal(false)}
+          />
+          <Pressable onPress={() => setShowModal(false)}>
+            <Ionicons name="close-circle" size={55} color="blue" />
+          </Pressable>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -74,5 +73,21 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     width: "100%",
+  },
+  modalContainer: {
+    backgroundColor: "red",
+    borderBlockColor: "white",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+    width: "30%",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    gap: 10,
   },
 });
