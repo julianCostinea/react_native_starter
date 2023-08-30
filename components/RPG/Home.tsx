@@ -7,8 +7,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
-
   const queryClient = useQueryClient();
 
   const fetchUsers = (): Promise<user[]> => axios.get(`${REACT_APP_MOCK_API}/users`).then((response) => response.data);
